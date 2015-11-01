@@ -95,7 +95,6 @@ public class AccountOverviewController {
 
     }
 
-
     @FXML
     private void handleButtonAction(ActionEvent event) {
         // Button was clicked, do something...
@@ -137,6 +136,7 @@ public class AccountOverviewController {
             if (account.getId() != null) {
                 field1.setText(account.getLogin().getValue());
                 field2.setText(account.getPassword().getValue());
+                field3.setText("");
             }
 
         }
@@ -254,4 +254,6 @@ public class AccountOverviewController {
             alert.showAndWait();
         }
     }
+
+
 }

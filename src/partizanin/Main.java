@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -13,12 +14,13 @@ import javafx.stage.Stage;
 import partizanin.controller.AccountEditDialogController;
 import partizanin.controller.AccountOverviewController;
 import partizanin.model.Account;
+import partizanin.utils.Parser;
 
 import java.io.IOException;
 import java.util.Objects;
 
 public class Main extends Application {
-
+//todo when account is new when account is parse add normal id
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -29,16 +31,8 @@ public class Main extends Application {
     private ObservableList<Account> accountsData = FXCollections.observableArrayList();
 
     public Main() {
-        accountsData.add(new Account("vasa", "pupkin", false, true, "pupkin", 1));
-        accountsData.add(new Account("igor", "vasechkin", false, true, "vasechkin", 2));
-        accountsData.add(new Account("vasa", "pupkin", false, true, "pupkin", 3));
-        accountsData.add(new Account("vasa", "pupkin", false, true, "pupkin", 4));
-        accountsData.add(new Account("vasa", "pupkin", false, true, "pupkin", 5));
-        accountsData.add(new Account("vasa", "pupkin", false, true, "pupkin", 6));
-        accountsData.add(new Account("vasa", "pupkin", false, true, "pupkin", 7));
-        accountsData.add(new Account("vasa", "pupkin", false, true, "pupkin", 8));
-        accountsData.add(new Account("vasa", "pupkin", false, true, "pupkin", 9));
-        accountsData.add(new Account("vasa", "pupkin", false, true, "pupkin", 10));
+        Parser parser = new Parser();
+        accountsData.addAll(parser.getAccounts());
     }
 
     public ObservableList<Account> getAccountData() {
@@ -144,6 +138,16 @@ public class Main extends Application {
                     break;
                 }
             }
+        }
+
+        if (result.getId() == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(getPrimaryStage());
+            alert.setTitle("No UnUsed Account");
+            alert.setHeaderText("No UnUsed Account");
+            alert.setContentText("Please load new UnUsed Account.");
+
+            alert.showAndWait();
         }
         return result;
     }

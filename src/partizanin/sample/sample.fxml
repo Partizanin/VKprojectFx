@@ -50,7 +50,7 @@
                               <TableColumn fx:id="ActiveColumn" prefWidth="70.0" text="Active" />
                            </columns>
                         </TableView>
-                        <TextField layoutX="140.0" layoutY="314.0" prefHeight="25.0" prefWidth="116.0" promptText="search Query" />
+                        <TextField fx:id="filterField" layoutX="140.0" layoutY="314.0" prefHeight="25.0" prefWidth="116.0" promptText="search Query" />
                         <Button layoutX="90.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleDeleteAccount" text="Delete" textOverrun="WORD_ELLIPSIS" />
                         <Button layoutX="54.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleEditAccount" text="Edit" />
                         <Button layoutX="14.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleNewAccount" text="New" />

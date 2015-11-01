@@ -1,6 +1,9 @@
 package partizanin.controller;
 
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -35,6 +38,8 @@ public class AccountOverviewController {
     public Label idLabel;
     @FXML
     public Label idLabelValue;
+    @FXML
+    public TextField filterField;
 
     @FXML
     private TableView<Account> accountTableView;
@@ -140,7 +145,7 @@ public class AccountOverviewController {
 
     @FXML
     private void initialize() {
-        // Initialize the person table with the two columns.
+        // Initialize the person table
         IdColumn.setCellValueFactory(cellData -> cellData.getValue().getId().asObject());
         LoginColumn.setCellValueFactory(cellData -> cellData.getValue().getLogin());
         PasswordColumn.setCellValueFactory(cellData -> cellData.getValue().getPassword());
@@ -149,6 +154,43 @@ public class AccountOverviewController {
         ActiveColumn.setCellValueFactory(cellData -> cellData.getValue().getActive());
 
         accountTableView.getSelectionModel().selectedItemProperty().addListener(this::actionTableListener);
+
+        filterField.textProperty().addListener((observable, oldValue, newValue) -> {
+            handleFilterEvent(newValue);
+        });
+
+
+    }
+
+
+    private void handleFilterEvent(String newValue) {
+
+        ObservableList<Account> accountData = main.getAccountData();
+
+        FilteredList<Account> filteredList = new FilteredList<Account>(accountData, p -> true);
+
+
+        SortedList<Account> sortedData = new SortedList<Account>(filteredList);
+
+        sortedData.comparatorProperty().bind(accountTableView.comparatorProperty());
+        filteredList.setPredicate(account -> {
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+
+            String lowerCaseFilter = newValue.toLowerCase();
+
+            if ( account.getLogin().getValue().toLowerCase().contains(lowerCaseFilter)
+                    || account.getSecondLogin().getValue().toLowerCase().contains(lowerCaseFilter)
+                    || account.getPassword().getValue().toLowerCase().contains(lowerCaseFilter)
+                    || lowerCaseFilter.contains(String.valueOf(account.getId().getValue()))) {
+                return true;
+            }
+
+            return false;
+        });
+        accountTableView.setItems(sortedData);
+
 
     }
 

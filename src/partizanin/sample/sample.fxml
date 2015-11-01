@@ -26,9 +26,9 @@
                         <TextField fx:id="field2" layoutX="105.0" layoutY="94.0" promptText="qwerty123" />
                         <TextField fx:id="field1" layoutX="105.0" layoutY="55.0" promptText="Vasa Pupkin" />
                         <TextField fx:id="field3" layoutX="105.0" layoutY="127.0" promptText="Pupkin" />
-                        <Button fx:id="button1" layoutX="254.0" layoutY="55.0" mnemonicParsing="false"  text="Copy" />
-                        <Button fx:id="button2" layoutX="254.0" layoutY="94.0" mnemonicParsing="false"  text="Copy" />
-                        <Button fx:id="button3" layoutX="254.0" layoutY="127.0" mnemonicParsing="false"  text="Copy" />
+                        <Button fx:id="button1"  layoutX="254.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Copy" />
+                        <Button fx:id="button2" layoutX="254.0" layoutY="94.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Copy" />
+                        <Button fx:id="button3" layoutX="254.0" layoutY="127.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Copy" />
                      </children>
                   </Pane>
                </content>
@@ -39,7 +39,7 @@
                      <children>
                         <TableView fx:id="accountTableView" editable="true" layoutX="14.0" layoutY="52.0" prefHeight="280.0" prefWidth="479.0">
                            <columns>
-                              <TableColumn fx:id="IdColumn" editable="false" prefWidth="75.0" text="id" />
+                              <TableColumn  fx:id="IdColumn" prefWidth="75.0" text="id" />
                               <TableColumn fx:id="LoginColumn" prefWidth="75.0" text="Login" />
                               <TableColumn fx:id="PasswordColumn" prefWidth="75.0" text="Password" />
                               <TableColumn fx:id="SecondLoginColumn" prefWidth="103.0" text="SecondLogin" />

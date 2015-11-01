@@ -13,15 +13,20 @@ import java.awt.datatransfer.StringSelection;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class Controller implements Initializable{
+public class Controller implements Initializable {
 
+    @FXML
     public Button button1;
+    @FXML
     public Button button2;
+    @FXML
     public Button button3;
+    @FXML
     public TextField field1;
+    @FXML
     public TextField field2;
+    @FXML
     public TextField field3;
-
 
 
     @FXML
@@ -29,7 +34,7 @@ public class Controller implements Initializable{
 
 
     @FXML
-    private void handleButtonAction(ActionEvent event) {
+    public void handleButtonAction(ActionEvent event) {
         // Button was clicked, do something...
         System.out.println(event);
         java.awt.datatransfer.Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
@@ -38,10 +43,10 @@ public class Controller implements Initializable{
         String text = "";
         if (button.getId().equals("button1")) {
             text = field1.getText();
-        }else if (button.getId().equals("button2")) {
+        } else if (button.getId().equals("button2")) {
 
             text = field2.getText();
-        }else{
+        } else {
             text = field3.getText();
 
         }
@@ -50,7 +55,6 @@ public class Controller implements Initializable{
 
         clipboard.setContents(selection, selection);
     }
-
 
 
     @Override

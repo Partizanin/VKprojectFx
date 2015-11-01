@@ -1,12 +1,16 @@
 package partizanin.controller;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
+import javafx.scene.control.*;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import partizanin.Main;
 import partizanin.model.Account;
+
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
 
 /**
  * Created with Intellij IDEA.
@@ -16,6 +20,15 @@ import partizanin.model.Account;
  * To change this template use File|Setting|Editor|File and Code Templates.
  */
 public class AccountOverviewController {
+    @FXML
+    public Button button1;
+
+    @FXML
+    public Button button2;
+
+    @FXML
+    public Button button3;
+
     @FXML
     private TableView<Account> accountTableView;
 
@@ -56,10 +69,44 @@ public class AccountOverviewController {
 
     private Main main;
 
+    @FXML
+    private TextField field1;
+
+    @FXML
+    private TextField field2;
+
+    @FXML
+    private TextField field3;
+
     public AccountOverviewController() {
 
 
     }
+
+
+    @FXML
+    private void handleButtonAction(ActionEvent event) {
+        // Button was clicked, do something...
+        System.out.println(event);
+        java.awt.datatransfer.Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        Button button = (Button) event.getSource();
+        System.out.println(button.getId());
+        String text = "";
+        if (button.getId().equals("button1")) {
+            text = field1.getText();
+        }else if (button.getId().equals("button2")) {
+
+            text = field2.getText();
+        }else{
+            text = field3.getText();
+
+        }
+        System.out.println(text);
+        StringSelection selection = new StringSelection(text);
+
+        clipboard.setContents(selection, selection);
+    }
+
 
     @FXML
     private void initialize() {

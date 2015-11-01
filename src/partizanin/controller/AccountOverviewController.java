@@ -1,5 +1,6 @@
 package partizanin.controller;
 
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -94,10 +95,10 @@ public class AccountOverviewController {
         String text = "";
         if (button.getId().equals("button1")) {
             text = field1.getText();
-        }else if (button.getId().equals("button2")) {
+        } else if (button.getId().equals("button2")) {
 
             text = field2.getText();
-        }else{
+        } else {
             text = field3.getText();
 
         }
@@ -118,11 +119,68 @@ public class AccountOverviewController {
         UsedColumn.setCellValueFactory(cellData -> cellData.getValue().getUsed());
         ActiveColumn.setCellValueFactory(cellData -> cellData.getValue().getActive());
 
+        accountTableView.getSelectionModel().selectedItemProperty().addListener(this::actionTableListener);
+
+    }
+
+    @FXML
+    private void handleDeleteAccount() {
+        int selectedIndex = accountTableView.getSelectionModel().getSelectedIndex();
+        if (selectedIndex >= 0) {
+            accountTableView.getItems().remove(selectedIndex);
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Account Selected");
+            alert.setContentText("Please select a account in the table.");
+
+            alert.showAndWait();
+        }
+    }
+
+    private void actionTableListener(ObservableValue<? extends Account> observable, Account oldValue, Account newValue) {
+        System.out.println("\nchangeListener ");
+        System.out.println("oldValue: " + oldValue);
+        System.out.println("newValue:" + newValue);
     }
 
     public void setMain(Main main) {
         this.main = main;
 
         accountTableView.setItems(main.getAccountData());
+    }
+
+    @FXML
+    private void handleNewAccount() {
+        Account tempAccount = new Account();
+        boolean okClicked = main.showAccountEditDialog(tempAccount);
+        if (okClicked) {
+            main.getAccountData().add(tempAccount);
+        }
+    }
+
+    /**
+     * Called when the user clicks the edit button. Opens a dialog to edit
+     * details for the selected person.
+     */
+    @FXML
+    private void handleEditAccount() {
+        Account selectedAccount = accountTableView.getSelectionModel().getSelectedItem();
+        if (selectedAccount != null) {
+            main.showAccountEditDialog(selectedAccount);
+
+
+        } else {
+            // Nothing selected.
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Person Selected");
+            alert.setContentText("Please select a person in the table.");
+
+            alert.showAndWait();
+        }
     }
 }

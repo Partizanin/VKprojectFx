@@ -26,7 +26,7 @@
                         <TextField fx:id="field2" layoutX="105.0" layoutY="94.0" promptText="qwerty123" />
                         <TextField fx:id="field1" layoutX="105.0" layoutY="55.0" promptText="Vasa Pupkin" />
                         <TextField fx:id="field3" layoutX="105.0" layoutY="127.0" promptText="Pupkin" />
-                        <Button fx:id="button1"  layoutX="254.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Copy" />
+                        <Button fx:id="button1" layoutX="254.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Copy" />
                         <Button fx:id="button2" layoutX="254.0" layoutY="94.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Copy" />
                         <Button fx:id="button3" layoutX="254.0" layoutY="127.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Copy" />
                      </children>
@@ -37,17 +37,20 @@
                <content>
                   <Pane layoutX="5.0" layoutY="6.0" prefHeight="431.0" prefWidth="725.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <TableView fx:id="accountTableView" editable="true" layoutX="14.0" layoutY="52.0" prefHeight="280.0" prefWidth="479.0">
+                        <TableView fx:id="accountTableView" editable="true" layoutX="14.0" layoutY="14.0" prefHeight="300.0" prefWidth="551.0">
                            <columns>
-                              <TableColumn  fx:id="IdColumn" prefWidth="75.0" text="id" />
-                              <TableColumn fx:id="LoginColumn" prefWidth="75.0" text="Login" />
-                              <TableColumn fx:id="PasswordColumn" prefWidth="75.0" text="Password" />
-                              <TableColumn fx:id="SecondLoginColumn" prefWidth="103.0" text="SecondLogin" />
-                              <TableColumn fx:id="UsedColumn" prefWidth="75.0" text="Used" />
-                              <TableColumn fx:id="ActiveColumn" prefWidth="75.0" text="Active" />
+                              <TableColumn fx:id="IdColumn" prefWidth="48.0" text="id" />
+                              <TableColumn fx:id="LoginColumn" prefWidth="158.0" text="Login" />
+                              <TableColumn fx:id="PasswordColumn" minWidth="0.0" prefWidth="114.0" text="Password" />
+                              <TableColumn fx:id="SecondLoginColumn" prefWidth="102.0" text="SecondLogin" />
+                              <TableColumn fx:id="UsedColumn" prefWidth="53.0" text="Used" />
+                              <TableColumn fx:id="ActiveColumn" prefWidth="70.0" text="Active" />
                            </columns>
                         </TableView>
-                        <TextField layoutX="595.0" layoutY="52.0" prefHeight="25.0" prefWidth="116.0" promptText="search Query" />
+                        <TextField layoutX="140.0" layoutY="314.0" prefHeight="25.0" prefWidth="116.0" promptText="search Query" />
+                        <Button layoutX="90.0" layoutY="314.0" mnemonicParsing="false" text="Delete" onAction="#handleDeleteAccount" textOverrun="WORD_ELLIPSIS" />
+                        <Button layoutX="54.0" layoutY="314.0" mnemonicParsing="false" text="Edit" onAction="#handleEditAccount"/>
+                        <Button layoutX="14.0" layoutY="314.0" mnemonicParsing="false" text="New" onAction="#handleNewAccount"/>
                      </children>
                   </Pane>
                </content>

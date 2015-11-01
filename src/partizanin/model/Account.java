@@ -36,16 +36,16 @@ public class Account {
         return secondLogin;
     }
 
-    public void setSecondLogin(StringProperty secondLogin) {
-        this.secondLogin = secondLogin;
+    public void setSecondLogin(String secondLogin) {
+        this.secondLogin = new SimpleStringProperty(secondLogin);
     }
 
     public StringProperty getLogin() {
         return login;
     }
 
-    public void setLogin(StringProperty login) {
-        this.login = login;
+    public void setLogin(String login) {
+        this.login = new SimpleStringProperty(login);
     }
 
     public StringProperty getPassword() {
@@ -53,28 +53,30 @@ public class Account {
         return password;
     }
 
-    public void setPassword(StringProperty password) {
-        this.password = password;
+    public void setPassword(String password) {
+        this.password = new SimpleStringProperty(password);;
     }
 
     public BooleanProperty getActive() {
         return active;
     }
 
-    public void setActive(BooleanProperty active) {
-        this.active = active;
+    public void setActive(Boolean active) {
+
+        this.active = new SimpleBooleanProperty(active);
     }
 
     public IntegerProperty getId() {
         return id;
     }
 
-    public void setId(IntegerProperty id) {
-        this.id = id;
+    public void setId(Integer id) {
+
+        this.id = new SimpleIntegerProperty(id);
     }
 
-    public void setUsed(BooleanProperty used) {
-        this.used = used;
+    public void setUsed(Boolean used) {
+        this.used = new SimpleBooleanProperty(used);
     }
 
     public BooleanProperty getUsed() {

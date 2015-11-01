@@ -8,13 +8,19 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import partizanin.controller.AccountEditDialogController;
 import partizanin.controller.AccountOverviewController;
 import partizanin.model.Account;
 
 import java.io.IOException;
 
 public class Main extends Application {
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
+    }
 
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -77,6 +83,39 @@ public class Main extends Application {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    public boolean showAccountEditDialog(Account account) {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("sample/EditDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit Account");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            AccountEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            if (account.getId() == null) {
+                account.setId(accountsData.size()  + 1);
+            }
+            controller.setAccount(account);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

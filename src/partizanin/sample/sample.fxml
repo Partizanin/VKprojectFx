@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+
+<AnchorPane prefHeight="431.0" prefWidth="725.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="partizanin.controller.AccountOverviewController">
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+   <children>
+      <TabPane layoutX="5.0" layoutY="5.0">
+         <tabs>
+            <Tab closable="false" text="FistTab">
+               <content>
+                  <Pane layoutX="5.0" layoutY="6.0" prefHeight="431.0" prefWidth="725.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label layoutX="28.0" layoutY="59.0" text="Login" textOverrun="CLIP" wrapText="true" />
+                        <Label layoutX="28.0" layoutY="98.0" text="Password" />
+                        <Label layoutX="28.0" layoutY="131.0" text="SecondLogin" />
+                        <TextField fx:id="field2" layoutX="105.0" layoutY="94.0" promptText="qwerty123" />
+                        <TextField fx:id="field1" layoutX="105.0" layoutY="55.0" promptText="Vasa Pupkin" />
+                        <TextField fx:id="field3" layoutX="105.0" layoutY="127.0" promptText="Pupkin" />
+                        <Button fx:id="button1" layoutX="254.0" layoutY="55.0" mnemonicParsing="false"  text="Copy" />
+                        <Button fx:id="button2" layoutX="254.0" layoutY="94.0" mnemonicParsing="false"  text="Copy" />
+                        <Button fx:id="button3" layoutX="254.0" layoutY="127.0" mnemonicParsing="false"  text="Copy" />
+                     </children>
+                  </Pane>
+               </content>
+            </Tab>
+            <Tab closable="false" text="SecondTab">
+               <content>
+                  <Pane layoutX="5.0" layoutY="6.0" prefHeight="431.0" prefWidth="725.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <TableView fx:id="accountTableView" editable="true" layoutX="14.0" layoutY="52.0" prefHeight="280.0" prefWidth="479.0">
+                           <columns>
+                              <TableColumn fx:id="IdColumn" editable="false" prefWidth="75.0" text="id" />
+                              <TableColumn fx:id="LoginColumn" prefWidth="75.0" text="Login" />
+                              <TableColumn fx:id="PasswordColumn" prefWidth="75.0" text="Password" />
+                              <TableColumn fx:id="SecondLoginColumn" prefWidth="103.0" text="SecondLogin" />
+                              <TableColumn fx:id="UsedColumn" prefWidth="75.0" text="Used" />
+                              <TableColumn fx:id="ActiveColumn" prefWidth="75.0" text="Active" />
+                           </columns>
+                        </TableView>
+                        <TextField layoutX="595.0" layoutY="52.0" prefHeight="25.0" prefWidth="116.0" promptText="search Query" />
+                     </children>
+                  </Pane>
+               </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

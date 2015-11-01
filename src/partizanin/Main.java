@@ -15,6 +15,7 @@ import partizanin.controller.AccountOverviewController;
 import partizanin.model.Account;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class Main extends Application {
 
@@ -121,5 +122,29 @@ public class Main extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    }
+
+    public Account getNextAccount(Integer id,String secondLogin) {
+
+        Account result = new Account();
+        boolean update = false;
+
+        if (id == null) {
+            update = true;
+        }
+        for (Account account : accountsData) {
+            if (!update && Objects.equals(account.getId().getValue(), id)) {
+                account.setSecondLogin(secondLogin);
+                update = true;
+            }
+            if (account.getSecondLogin().getValue().length() < 2) {
+
+                result = account;
+                if (update) {
+                    break;
+                }
+            }
+        }
+        return result;
     }
 }

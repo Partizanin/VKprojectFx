@@ -29,6 +29,9 @@
                         <Button fx:id="button1" layoutX="254.0" layoutY="55.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Copy" />
                         <Button fx:id="button2" layoutX="254.0" layoutY="94.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Copy" />
                         <Button fx:id="button3" layoutX="254.0" layoutY="127.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Copy" />
+                        <Button fx:id="nextAccountButton" layoutX="105.0" layoutY="152.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="25.0" prefWidth="193.0" text="Get Next Account" />
+                        <Label fx:id="idLabel" layoutX="28.0" layoutY="30.0" text="Id" />
+                        <Label fx:id="idLabelValue" layoutX="105.0" layoutY="30.0" text=" " />
                      </children>
                   </Pane>
                </content>
@@ -48,9 +51,9 @@
                            </columns>
                         </TableView>
                         <TextField layoutX="140.0" layoutY="314.0" prefHeight="25.0" prefWidth="116.0" promptText="search Query" />
-                        <Button layoutX="90.0" layoutY="314.0" mnemonicParsing="false" text="Delete" onAction="#handleDeleteAccount" textOverrun="WORD_ELLIPSIS" />
-                        <Button layoutX="54.0" layoutY="314.0" mnemonicParsing="false" text="Edit" onAction="#handleEditAccount"/>
-                        <Button layoutX="14.0" layoutY="314.0" mnemonicParsing="false" text="New" onAction="#handleNewAccount"/>
+                        <Button layoutX="90.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleDeleteAccount" text="Delete" textOverrun="WORD_ELLIPSIS" />
+                        <Button layoutX="54.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleEditAccount" text="Edit" />
+                        <Button layoutX="14.0" layoutY="314.0" mnemonicParsing="false" onAction="#handleNewAccount" text="New" />
                      </children>
                   </Pane>
                </content>

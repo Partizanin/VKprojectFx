@@ -29,6 +29,12 @@ public class AccountOverviewController {
 
     @FXML
     public Button button3;
+    @FXML
+    public Button nextAccountButton;
+    @FXML
+    public Label idLabel;
+    @FXML
+    public Label idLabelValue;
 
     @FXML
     private TableView<Account> accountTableView;
@@ -90,22 +96,45 @@ public class AccountOverviewController {
         // Button was clicked, do something...
         System.out.println(event);
         java.awt.datatransfer.Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
-        Button button = (Button) event.getSource();
-        System.out.println(button.getId());
+        Button clickedButton = (Button) event.getSource();
+        System.out.println(clickedButton.getId());
         String text = "";
-        if (button.getId().equals("button1")) {
+        String action = "copy";
+        if (clickedButton.getId().equals("button1")) {
             text = field1.getText();
-        } else if (button.getId().equals("button2")) {
+        } else if (clickedButton.getId().equals("button2")) {
 
             text = field2.getText();
-        } else {
+        } else if (clickedButton.getId().equals("button3")){
             text = field3.getText();
 
+        }else if (clickedButton.getId().equals("nextAccountButton")) {
+            action = "nextAccount";
         }
-        System.out.println(text);
-        StringSelection selection = new StringSelection(text);
 
-        clipboard.setContents(selection, selection);
+
+        System.out.println(text);
+
+        if (action.equals("copy")) {
+            StringSelection selection = new StringSelection(text);
+
+            clipboard.setContents(selection, selection);
+        }else {
+            Integer id = null;
+            String secondLogin = null;
+            if (idLabelValue.getText() != null && !idLabelValue.getText().isEmpty() && idLabelValue.getText().length() > 1) {
+                id = Integer.valueOf(idLabelValue.getText());
+                secondLogin = field3.getText();
+            }
+
+            Account account = main.getNextAccount(id, secondLogin);
+
+            if (account.getId() != null) {
+                field1.setText(account.getLogin().getValue());
+                field2.setText(account.getPassword().getValue());
+            }
+
+        }
     }
 
 

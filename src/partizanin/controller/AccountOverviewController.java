@@ -126,23 +126,31 @@ public class AccountOverviewController {
         }else {
             Integer id = null;
             String secondLogin = null;
-            if (idLabelValue.getText() != null && !idLabelValue.getText().isEmpty() && idLabelValue.getText().length() > 1) {
+            if (idLabelValue.getText() != null && !idLabelValue.getText().isEmpty() && isNumeric(idLabelValue.getText())) {
                 id = Integer.valueOf(idLabelValue.getText());
                 secondLogin = field3.getText();
             }
 
             Account account = main.getNextAccount(id, secondLogin);
-
+            accountTableView.setItems(main.getAccountData());
             if (account.getId() != null) {
+                idLabelValue.setText(String.valueOf(account.getId().getValue()));
                 field1.setText(account.getLogin().getValue());
                 field2.setText(account.getPassword().getValue());
                 field3.setText("");
+            }else {
+                field1.setText("");
+                field2.setText("");
+                field3.setText("");
+
             }
 
         }
     }
 
-
+    public boolean isNumeric(String s) {
+        return s.matches("[-+]?\\d*\\.?\\d+");
+    }
     @FXML
     private void initialize() {
         // Initialize the person table

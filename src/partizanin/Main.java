@@ -29,10 +29,17 @@ public class Main extends Application {
     private BorderPane rootLayout;
 
     private ObservableList<Account> accountsData = FXCollections.observableArrayList();
+    private Account editAccount;
 
     public Main() {
         Parser parser = new Parser();
-        accountsData.addAll(parser.getAccounts());
+        for (Account account : parser.getAccounts()) {
+
+            if (account.getId().getValue() == 0 && accountsData.size() != 0) {
+                account.setId(accountsData.size() );
+            }
+            accountsData.add(account);
+        }
     }
 
     public ObservableList<Account> getAccountData() {
@@ -118,7 +125,7 @@ public class Main extends Application {
         launch(args);
     }
 
-    public Account getNextAccount(Integer id,String secondLogin) {
+    public Account getNextAccount(Integer id, String secondLogin) {
 
         Account result = new Account();
         boolean update = false;
@@ -130,6 +137,7 @@ public class Main extends Application {
             if (!update && Objects.equals(account.getId().getValue(), id)) {
                 account.setSecondLogin(secondLogin);
                 update = true;
+                setEditAccount(account);
             }
             if (account.getSecondLogin().getValue().length() < 2) {
 
@@ -150,5 +158,14 @@ public class Main extends Application {
             alert.showAndWait();
         }
         return result;
+    }
+
+    public Account getEditAccount() {
+
+        return editAccount;
+    }
+
+    public void setEditAccount(Account editAccount) {
+        this.editAccount = editAccount;
     }
 }

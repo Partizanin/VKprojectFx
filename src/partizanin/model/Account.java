@@ -85,15 +85,7 @@ public class Account {
 
     @Override
     public String toString() {
-        final StringBuffer sb = new StringBuffer("Account{");
-        sb.append("secondLogin='").append(secondLogin).append('\'');
-        sb.append(", login='").append(login).append('\'');
-        sb.append(", password='").append(password).append('\'');
-        sb.append(", id=").append(id);
-        sb.append(", used=").append(used);
-        sb.append(", active=").append(active);
-        sb.append('}');
-        return sb.toString();
+        return "Account{" + ", id=" + id + ", login='" + login + '\'' + ", password='" + password + '\'' + ", used=" + used + ", active=" + active + "secondLogin='" + secondLogin + '\'' + '}';
     }
 
 }

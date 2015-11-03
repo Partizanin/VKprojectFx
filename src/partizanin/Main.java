@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class Main extends Application {
-/*todo when account is new when account is parse add normal id add file chooser for load new accounts*/
+/*todo add file chooser for load new accounts*/
     public Stage getPrimaryStage() {
         return primaryStage;
     }

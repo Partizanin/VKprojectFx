@@ -129,7 +129,7 @@ public class AccountOverviewController {
             if (idLabelValue.getText() != null && !idLabelValue.getText().isEmpty() && isNumeric(idLabelValue.getText())) {
                 id = Integer.valueOf(idLabelValue.getText());
                 secondLogin = field3.getText();
-            }
+            }/*todo fix bag here with editing row and getting account*/
 
             Account account = main.getNextAccount(id, secondLogin);
             accountTableView.setItems(main.getAccountData());

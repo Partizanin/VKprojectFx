@@ -136,6 +136,7 @@ public class Main extends Application {
         for (Account account : accountsData) {
             if (!update && Objects.equals(account.getId().getValue(), id)) {
                 account.setSecondLogin(secondLogin);
+                account.setUsed(true);
                 update = true;
                 setEditAccount(account);
             }

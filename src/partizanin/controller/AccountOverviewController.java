@@ -142,10 +142,18 @@ public class AccountOverviewController {
                 field1.setText("");
                 field2.setText("");
                 field3.setText("");
+                idLabelValue.setText("");
 
             }
 
+
+            repaintTableView();
         }
+    }
+
+    public void repaintTableView() {
+        accountTableView.getColumns().get(0).setVisible(false);
+        accountTableView.getColumns().get(0).setVisible(true);
     }
 
     public boolean isNumeric(String s) {

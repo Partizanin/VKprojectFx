@@ -40,6 +40,10 @@ public class AccountOverviewController {
     public Label idLabelValue;
     @FXML
     public TextField filterField;
+    @FXML
+    public Button importButton;
+    @FXML
+    public Button exportButton;
 
     @FXML
     private TableView<Account> accountTableView;
@@ -114,6 +118,10 @@ public class AccountOverviewController {
 
         }else if (clickedButton.getId().equals("nextAccountButton")) {
             action = "nextAccount";
+        }else if (clickedButton.getId().equals("importButton")) {
+            main.showFileChooser();
+        }else if (clickedButton.getId().equals("exportButton")) {
+
         }
 
 
@@ -162,6 +170,7 @@ public class AccountOverviewController {
     public boolean isNumeric(String s) {
         return s.matches("[-+]?\\d*\\.?\\d+");
     }
+
     @FXML
     private void initialize() {
         // Initialize the person table

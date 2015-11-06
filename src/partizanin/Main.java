@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import partizanin.controller.AccountEditDialogController;
@@ -16,7 +17,9 @@ import partizanin.controller.AccountOverviewController;
 import partizanin.model.Account;
 import partizanin.utils.FileUtils;
 
+import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 
 public class Main extends Application {
@@ -33,7 +36,11 @@ public class Main extends Application {
     private Account editAccount;
 
     public Main() {
+        loadAccountToTable();
+    }
 
+    private void loadAccountToTable() {
+        accountsData.clear();
         for (Account account : fileUtils.getAccounts()) {
 
             if (account.getId().getValue() == 0 && accountsData.size() != 0) {
@@ -72,6 +79,7 @@ public class Main extends Application {
 
     }
 
+
     public void updateAccounts(Integer id, String secondLogin) {
         accountsData.stream().filter(account -> Objects.equals(account.getId().getValue(), id)).forEach(account -> {
             account.setSecondLogin(secondLogin);
@@ -81,6 +89,38 @@ public class Main extends Application {
         });
     }
 
+    public void showFileChooser(){
+        FileChooser fileChooser = new FileChooser();
+
+        fileChooser.setTitle("Open Resource File");
+
+        File file = fileChooser.showOpenDialog(primaryStage);
+        String validation = null;
+        Object[] validationResult = fileUtils.fileValidation(file);
+        validation = (String) validationResult[0];
+        if (file != null
+                && !validation.equals("wrong File Type")
+                && !validation.equals("all")) {
+            System.out.println(file.getPath());
+
+
+/*todo make correct update accounts*/
+            fileUtils.updateFile((List<Account>) validationResult[1]);
+            loadAccountToTable();
+        }else {
+            validation = "Chose the correct File Type!!!";
+        }
+
+        if (!validation.equals("true")) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(getPrimaryStage());
+            alert.setTitle("Validation Alert!!!");
+            alert.setHeaderText("some lines have not been validated");
+            alert.setContentText(validation);
+
+            alert.showAndWait();
+        }
+    }
     public void showAccountOverview() {
         try {
         FXMLLoader loader = new FXMLLoader();

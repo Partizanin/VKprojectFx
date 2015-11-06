@@ -124,31 +124,34 @@ public class AccountOverviewController {
 
             clipboard.setContents(selection, selection);
         }else {
-            Integer id = null;
-            String secondLogin = null;
-            if (idLabelValue.getText() != null && !idLabelValue.getText().isEmpty() && isNumeric(idLabelValue.getText())) {
-                id = Integer.valueOf(idLabelValue.getText());
-                secondLogin = field3.getText();
-            }/*todo fix bag here with editing row and getting account*/
-
-            Account account = main.getNextAccount(id, secondLogin);
-            accountTableView.setItems(main.getAccountData());
-            if (account.getId() != null) {
-                idLabelValue.setText(String.valueOf(account.getId().getValue()));
-                field1.setText(account.getLogin().getValue());
-                field2.setText(account.getPassword().getValue());
-                field3.setText("");
-            }else {
-                field1.setText("");
-                field2.setText("");
-                field3.setText("");
-                idLabelValue.setText("");
-
-            }
-
-
-            repaintTableView();
+            getNextAccount();
         }
+    }
+
+    public void getNextAccount() {
+        Integer id = null;
+        String secondLogin = null;
+        if (idLabelValue.getText() != null && !idLabelValue.getText().isEmpty() && isNumeric(idLabelValue.getText())) {
+            id = Integer.valueOf(idLabelValue.getText());
+            secondLogin = field3.getText();
+        }/*todo fix bag here with editing row and getting account*/
+
+        Account account = main.getNextAccount(id, secondLogin);
+        accountTableView.setItems(main.getAccountData());
+        if (account.getId() != null) {
+            idLabelValue.setText(String.valueOf(account.getId().getValue()));
+            field1.setText(account.getLogin().getValue());
+            field2.setText(account.getPassword().getValue());
+            field3.setText("");
+        }else {
+            field1.setText("");
+            field2.setText("");
+            field3.setText("");
+            idLabelValue.setText("");
+
+        }
+
+        repaintTableView();
     }
 
     public void repaintTableView() {
@@ -196,17 +199,13 @@ public class AccountOverviewController {
 
             String lowerCaseFilter = newValue.toLowerCase();
 
-            if ( account.getLogin().getValue().toLowerCase().contains(lowerCaseFilter)
+            return account.getLogin().getValue().toLowerCase().contains(lowerCaseFilter)
                     || account.getSecondLogin().getValue().toLowerCase().contains(lowerCaseFilter)
                     || account.getPassword().getValue().toLowerCase().contains(lowerCaseFilter)
-                    || lowerCaseFilter.contains(String.valueOf(account.getId().getValue()))) {
-                return true;
-            }
+                    || lowerCaseFilter.contains(String.valueOf(account.getId().getValue()));
 
-            return false;
         });
         accountTableView.setItems(sortedData);
-
 
     }
 
@@ -245,6 +244,9 @@ public class AccountOverviewController {
         boolean okClicked = main.showAccountEditDialog(tempAccount);
         if (okClicked) {
             main.getAccountData().add(tempAccount);
+            main.updateAccounts(tempAccount.getId().getValue(),tempAccount.getSecondLogin().getValue());
+            repaintTableView();
+
         }
     }
 

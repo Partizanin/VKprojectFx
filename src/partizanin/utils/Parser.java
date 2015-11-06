@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class Parser {
 
-    private FileUtils fileUtils = new FileUtils();
+    private FileWriterReader fileWriterReader = new FileWriterReader();
 
     public static void main(String[] args) {
         Parser parser = new Parser();
@@ -83,14 +83,14 @@ public class Parser {
     }
 
     protected List<Account> mainFileToObjects() {
-        String[] splitText = fileUtils.readFromFile("list").split("\\n");
+        String[] splitText = fileWriterReader.readFromFile("list").split("\\n");
 
             return getObjectsFromFile(splitText);
     }
 
     protected List<Account> txtFileToObjects() {
         ArrayList<Account> accounts = new ArrayList<>();
-        String[] splitText = fileUtils.readFromFile("numbers").split("\\n");
+        String[] splitText = fileWriterReader.readFromFile("numbers").split("\\n");
         for (int i = 0; i < splitText.length; i++) {
             String login = splitText[i].split(":")[0];
             String password = splitText[i].split(":")[1];
@@ -101,8 +101,6 @@ public class Parser {
 
 
     public List<Account> getAccounts() {
-
-        mainFileToObjects();
 
         return mainFileToObjects();
     }

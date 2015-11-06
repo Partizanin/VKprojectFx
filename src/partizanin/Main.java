@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 import partizanin.controller.AccountEditDialogController;
 import partizanin.controller.AccountOverviewController;
 import partizanin.model.Account;
-import partizanin.utils.Parser;
+import partizanin.utils.FileUtils;
 
 import java.io.IOException;
 import java.util.Objects;
@@ -27,13 +27,14 @@ public class Main extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private FileUtils fileUtils = new FileUtils();
 
     private ObservableList<Account> accountsData = FXCollections.observableArrayList();
     private Account editAccount;
 
     public Main() {
-        Parser parser = new Parser();
-        for (Account account : parser.getAccounts()) {
+
+        for (Account account : fileUtils.getAccounts()) {
 
             if (account.getId().getValue() == 0 && accountsData.size() != 0) {
                 account.setId(accountsData.size() );
@@ -71,6 +72,15 @@ public class Main extends Application {
 
     }
 
+    public void updateAccounts(Integer id, String secondLogin) {
+        accountsData.stream().filter(account -> Objects.equals(account.getId().getValue(), id)).forEach(account -> {
+            account.setSecondLogin(secondLogin);
+            account.setUsed(true);
+            setEditAccount(account);
+            fileUtils.updateFile(accountsData);
+        });
+    }
+
     public void showAccountOverview() {
         try {
         FXMLLoader loader = new FXMLLoader();
@@ -82,6 +92,8 @@ public class Main extends Application {
             AccountOverviewController controller = loader.getController();
 
             controller.setMain(this);
+
+            controller.getNextAccount();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -128,24 +140,11 @@ public class Main extends Application {
     public Account getNextAccount(Integer id, String secondLogin) {
 
         Account result = new Account();
-        boolean update = false;
-
-        if (id == null) {
-            update = true;
-        }
+        updateAccounts(id, secondLogin);
         for (Account account : accountsData) {
-            if (!update && Objects.equals(account.getId().getValue(), id)) {
-                account.setSecondLogin(secondLogin);
-                account.setUsed(true);
-                update = true;
-                setEditAccount(account);
-            }
             if (account.getSecondLogin().getValue().length() < 2) {
-
                 result = account;
-                if (update) {
                     break;
-                }
             }
         }
 

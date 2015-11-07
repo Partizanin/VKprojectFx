@@ -3,6 +3,7 @@ package partizanin.utils;
 import partizanin.model.Account;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -24,9 +25,9 @@ public class FileUtils {
     private Parser parser = new Parser();
     private FileWriterReader fwr = new FileWriterReader();
 
-    public String loadNewNumbers(List<Account> list) {
+    public String loadNewNumbers(List<Account> list,List<Account> newList) {
 
-        return fwr.loadNewNumbers(list);
+        return fwr.loadNewNumbers(list,newList);
     }
 
     public void updateFile(List<Account> list) {
@@ -35,18 +36,6 @@ public class FileUtils {
 
     public List<Account> getAccounts() {
         return parser.getAccounts();
-    }
-
-    private String[] removeEmptyElements(String[] array) {
-
-        ArrayList<String> result = new ArrayList<>();
-
-        for (String s : array) {
-            if (!s.isEmpty() && !s.equals("\r")) {
-                result.add(s);
-            }
-        }
-        return result.toArray(new String[result.size()]);
     }
 
     public Object[] fileValidation(File file) {
@@ -80,7 +69,7 @@ public class FileUtils {
         return objects;
     }
 
-    protected Object[] validation(String[] text) {
+    private Object[] validation(String[] text) {
         Object[] result = new Object[2];
         List<Account> accounts = new ArrayList<>();
         String falseValidation = "";
@@ -107,6 +96,18 @@ public class FileUtils {
         result[1] = accounts;
         result[0] = falseValidation;
         return result;
+    }
+
+    private String[] removeEmptyElements(String[] array) {
+
+        ArrayList<String> result = new ArrayList<>();
+
+        for (String s : array) {
+            if (!s.isEmpty() && !s.equals("\r")) {
+                result.add(s);
+            }
+        }
+        return result.toArray(new String[result.size()]);
     }
 
     private Account getObjectFromText(String text) {
@@ -154,6 +155,20 @@ public class FileUtils {
         }
 
         return account;
+    }
+    public void saveFile(File file) {
+        FileWriter fileWriter = null;
+        StringBuilder sb1 = new StringBuilder();
+        getAccounts().stream().filter(account -> !account.getSecondLogin().getValue().isEmpty() && !account.getSecondLogin().getValue().matches("^\\s*$")).forEach(account -> {
+            sb1.append(account.getSecondLogin().getValue()).append(":").append(account.getPassword().getValue()).append("\n");
+        });
+        try {
+            fileWriter = new FileWriter(file);
+            fileWriter.write(String.valueOf(sb1));
+            fileWriter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

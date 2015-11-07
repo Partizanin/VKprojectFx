@@ -179,11 +179,9 @@ public class FileWriterReader {
         }
     }
 
-    protected String loadNewNumbers(List<Account> list) {
-        Parser parser = new Parser();
+    protected String loadNewNumbers(List<Account> list,List<Account> newAccounts) {
         String writeTxt = "";
 
-        List<Account> newAccounts = parser.getObjectsFromFile(readFromFile("Неактив").split("\n"));
         boolean addNewAccount = true;
 
         for (Account newAccount : newAccounts) {
@@ -194,7 +192,7 @@ public class FileWriterReader {
                 }
             }
             if (addNewAccount) {
-                writeTxt += newAccount.getLogin() + ":" + newAccount.getPassword() + "\n";
+                writeTxt += newAccount.getLogin().getValue() + ":" + newAccount.getPassword().getValue() + "\n";
             }
             addNewAccount = true;
         }

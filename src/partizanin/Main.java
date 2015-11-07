@@ -31,6 +31,7 @@ public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private FileUtils fileUtils = new FileUtils();
+    private AccountOverviewController controller;
 
     private ObservableList<Account> accountsData = FXCollections.observableArrayList();
     private Account editAccount;
@@ -96,16 +97,17 @@ public class Main extends Application {
 
         File file = fileChooser.showOpenDialog(primaryStage);
         String validation = null;
+        if (file == null) {
+            return;
+        }
         Object[] validationResult = fileUtils.fileValidation(file);
         validation = (String) validationResult[0];
-        if (file != null
-                && !validation.equals("wrong File Type")
-                && !validation.equals("all")) {
+        if (!validation.equals("wrong File Type") && !validation.equals("all")) {
             System.out.println(file.getPath());
 
 
-/*todo make correct update accounts*/
-            fileUtils.updateFile((List<Account>) validationResult[1]);
+
+            fileUtils.loadNewNumbers(accountsData, (List<Account>) validationResult[1]);
             loadAccountToTable();
         }else {
             validation = "Chose the correct File Type!!!";
@@ -121,6 +123,19 @@ public class Main extends Application {
             alert.showAndWait();
         }
     }
+
+    public void showSaveFileDialog(){
+        FileChooser fileChooser = new FileChooser();
+
+        //Set extension filter
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+        fileChooser.getExtensionFilters().add(extFilter);
+
+        //Show save file dialog
+        File file = fileChooser.showSaveDialog(primaryStage);
+        fileUtils.saveFile(file);
+    }
+
     public void showAccountOverview() {
         try {
         FXMLLoader loader = new FXMLLoader();
@@ -129,7 +144,7 @@ public class Main extends Application {
 
             rootLayout.setCenter(accountOverview);
 
-            AccountOverviewController controller = loader.getController();
+            controller = loader.getController();
 
             controller.setMain(this);
 
@@ -165,7 +180,7 @@ public class Main extends Application {
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
-
+             this.controller.repaintTableView();
             return controller.isOkClicked();
         } catch (IOException e) {
             e.printStackTrace();

@@ -268,6 +268,7 @@ public class AccountOverviewController {
         Account selectedAccount = accountTableView.getSelectionModel().getSelectedItem();
         if (selectedAccount != null) {
             main.showAccountEditDialog(selectedAccount);
+            main.updateFile();
 
 
         } else {

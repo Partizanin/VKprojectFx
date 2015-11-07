@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.Objects;
 
 public class Main extends Application {
-/*todo add file chooser for load new accounts*/
+    /*todo add file chooser for load new accounts*/
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -34,7 +34,6 @@ public class Main extends Application {
     private AccountOverviewController controller;
 
     private ObservableList<Account> accountsData = FXCollections.observableArrayList();
-    private Account editAccount;
 
     public Main() {
         loadAccountToTable();
@@ -45,7 +44,7 @@ public class Main extends Application {
         for (Account account : fileUtils.getAccounts()) {
 
             if (account.getId().getValue() == 0 && accountsData.size() != 0) {
-                account.setId(accountsData.size() );
+                account.setId(accountsData.size());
             }
             accountsData.add(account);
         }
@@ -80,17 +79,19 @@ public class Main extends Application {
 
     }
 
+    public void updateFile() {
+        fileUtils.updateFile(accountsData);
+    }
 
     public void updateAccounts(Integer id, String secondLogin) {
         accountsData.stream().filter(account -> Objects.equals(account.getId().getValue(), id)).forEach(account -> {
             account.setSecondLogin(secondLogin);
             account.setUsed(true);
-            setEditAccount(account);
-            fileUtils.updateFile(accountsData);
+            updateFile();
         });
     }
 
-    public void showFileChooser(){
+    public void showFileChooser() {
         FileChooser fileChooser = new FileChooser();
 
         fileChooser.setTitle("Open Resource File");
@@ -106,10 +107,9 @@ public class Main extends Application {
             System.out.println(file.getPath());
 
 
-
             fileUtils.loadNewNumbers(accountsData, (List<Account>) validationResult[1]);
             loadAccountToTable();
-        }else {
+        } else {
             validation = "Chose the correct File Type!!!";
         }
 
@@ -124,7 +124,7 @@ public class Main extends Application {
         }
     }
 
-    public void showSaveFileDialog(){
+    public void showSaveFileDialog() {
         FileChooser fileChooser = new FileChooser();
 
         //Set extension filter
@@ -138,8 +138,8 @@ public class Main extends Application {
 
     public void showAccountOverview() {
         try {
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(Main.class.getResource("sample/sample.fxml"));
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("sample/sample.fxml"));
             AnchorPane accountOverview = loader.load();
 
             rootLayout.setCenter(accountOverview);
@@ -174,13 +174,13 @@ public class Main extends Application {
             AccountEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             if (account.getId() == null) {
-                account.setId(accountsData.size()  + 1);
+                account.setId(accountsData.size() + 1);
             }
             controller.setAccount(account);
 
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
-             this.controller.repaintTableView();
+            this.controller.repaintTableView();
             return controller.isOkClicked();
         } catch (IOException e) {
             e.printStackTrace();
@@ -199,7 +199,7 @@ public class Main extends Application {
         for (Account account : accountsData) {
             if (account.getSecondLogin().getValue().length() < 2) {
                 result = account;
-                    break;
+                break;
             }
         }
 
@@ -215,12 +215,4 @@ public class Main extends Application {
         return result;
     }
 
-    public Account getEditAccount() {
-
-        return editAccount;
-    }
-
-    public void setEditAccount(Account editAccount) {
-        this.editAccount = editAccount;
-    }
 }

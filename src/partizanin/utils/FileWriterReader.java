@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created with Intellij IDEA.
@@ -16,47 +17,6 @@ import java.util.List;
  * To change this template use File|Setting|Editor|File and Code Templates.
  */
 public class FileWriterReader {
-
-    public static void main(String[] args) throws IOException {
-        FileWriterReader fileUtils = new FileWriterReader();
-       /* Accounts accounts = new Accounts();
-        Account account = new Account();
-
-        account.setId(1);
-        account.setLogin("380634401004");
-        account.setSecondLogin("380932534213212314");
-        account.setPassword("aaaaa");
-        account.setActive(true);
-        account.setUsed(false);
-
-        accounts.getAccounts().add(account);
-        account = new Account();
-
-        account.setId(2);
-        account.setLogin("380634401004");
-        account.setSecondLogin("380932534213212314");
-        account.setPassword("bbbb");
-        account.setActive(false);
-        account.setUsed(true);
-
-        accounts.getAccounts().add(account);
-        account = new Account();
-
-        account.setId(3);
-        account.setLogin("380634401004");
-        account.setSecondLogin("380932534213212314");
-        account.setPassword("ccc");
-        account.setActive(false);
-        account.setUsed(true);
-
-        accounts.getAccounts().add(account);
-        accounts.setDate(LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")));
-
-        fileUtils.writeTxt(accounts);*/
-        System.out.println(fileUtils.getPath());
-
-
-    }
 
     private void updateFile(String text) {
 
@@ -93,13 +53,24 @@ public class FileWriterReader {
     }
 
     private String getPath() {
-        String path = this.getClass().getClassLoader().getResource("").getPath();
-        String result = "";
 
-        int finish = path.indexOf("VKprojectFx") + 11;
-        result = path.substring(0, finish);
-        result += "/src/recourse/";
-        return result.substring(1);
+        String result = "";
+        Properties prop = new Properties();
+        String path = "/app.properties";
+        File jarPath=new File(FileWriterReader.class.getProtectionDomain().getCodeSource().getLocation().getPath());
+        String propertiesPath=jarPath.getParentFile().getAbsolutePath();
+        propertiesPath = propertiesPath.substring(0,propertiesPath.indexOf("out"));
+        System.out.println(" propertiesPath-"+propertiesPath);
+        try {
+            prop.load(new FileInputStream(propertiesPath + path));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        result = prop.getProperty("listPath");
+        System.out.println(result);
+
+        return result;
     }
 
     private void writeToFile(String source, String name) {
@@ -131,15 +102,9 @@ public class FileWriterReader {
         }
     }
 
-    public String readFromFile(String name) {
-        if (name.equals("list")) {
+    public String readFromFile() {
 
-            name = getPath() + "list.txt";
-
-        } else {
-            name = getPath() + "Неактив вк.txt";
-        }
-
+        String name = getPath();
         byte[] encoded = new byte[0];
         try {
             encoded = Files.readAllBytes(Paths.get(name));

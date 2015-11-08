@@ -54,6 +54,7 @@ public class FileUtils {
         String readFile = new String(encoded, StandardCharsets.UTF_8);
         String[] splitContent = removeEmptyElements(readFile.split("\n"));
         Object[] validationResult = validation(splitContent);
+        System.out.println(validationResult[1]);
         List<Account> accountList = (List<Account>) validationResult[1];
         String validationResultValue = (String) validationResult[0];
         if (validationResultValue.isEmpty()) {

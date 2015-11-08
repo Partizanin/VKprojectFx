@@ -16,12 +16,6 @@ public class Parser {
 
     private FileWriterReader fileWriterReader = new FileWriterReader();
 
-    public static void main(String[] args) {
-        Parser parser = new Parser();
-        parser.mainFileToObjects().forEach(System.out::println);
-
-
-    }
 
     private String[] removeEmptyElements(String[] array) {
         ArrayList<String> result = new ArrayList<>();
@@ -83,14 +77,14 @@ public class Parser {
     }
 
     protected List<Account> mainFileToObjects() {
-        String[] splitText = fileWriterReader.readFromFile("list").split("\\n");
+        String[] splitText = fileWriterReader.readFromFile().split("\\n");
 
             return getObjectsFromFile(splitText);
     }
 
     protected List<Account> txtFileToObjects() {
         ArrayList<Account> accounts = new ArrayList<>();
-        String[] splitText = fileWriterReader.readFromFile("numbers").split("\\n");
+        String[] splitText = fileWriterReader.readFromFile().split("\\n");
         for (int i = 0; i < splitText.length; i++) {
             String login = splitText[i].split(":")[0];
             String password = splitText[i].split(":")[1];
